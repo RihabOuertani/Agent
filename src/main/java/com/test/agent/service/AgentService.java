@@ -11,6 +11,7 @@ public interface AgentService {
     public Agent findAgentByName(String name);
     public List<Agent> findAll();
     public void delete(Long id);
-    //public Agent update(Agent agent);
+    public long getCountOfAgents();
 
+    public List<Agent> findAgentByStatus(String status);
 }

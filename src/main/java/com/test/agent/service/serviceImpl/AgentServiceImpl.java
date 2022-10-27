@@ -5,7 +5,11 @@ import com.test.agent.exception.AgentNotFoundException;
 import com.test.agent.repository.AgentRepository;
 import com.test.agent.service.AgentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -42,8 +46,28 @@ public class AgentServiceImpl implements AgentService {
         agentRepository.deleteAgentById(id);
     }
 
-   /* @Override
-    public Agent update(Agent agent) {
-        return agentRepository.save(agent);
-    }*/
+    @Override
+    @Transactional
+    public long getCountOfAgents() {
+        long count = agentRepository.count();
+        return count;
+    }
+
+    @Override
+    public List<Agent> findAgentByStatus(String status) {
+            return agentRepository.findAgentByStatus(status).orElse(null);
+    }
+
+    /*
+    @Override
+    public int countAgentByStatus(String status) {
+        switch (status){
+            case "active":
+        }
+
+        return 0;
+
+    } **/
+
+
 }

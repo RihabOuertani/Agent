@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value= "/api/v1")
 public class AgentController {
@@ -55,5 +55,17 @@ public class AgentController {
                     newAgent.setName(name);
                     return agentRepository.save(newAgent);
                 });
+    }
+
+    @RequestMapping(value = "/count", method = RequestMethod.GET)
+    @ResponseBody
+    public long countEntities() {
+        long count = agentService.getCountOfAgents();
+        return count;
+    }
+
+    @GetMapping("/find/{status}")
+    public ResponseEntity<List<Agent>> findAgentByStatus (@PathVariable("status") String status) {
+        return new ResponseEntity<>(agentService.findAgentByStatus(status), HttpStatus.OK);
     }
 }
